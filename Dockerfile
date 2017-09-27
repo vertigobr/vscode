@@ -1,4 +1,5 @@
-FROM debian:jessie
+#FROM debian:jessie
+FROM ibmjava:8-sdk
 
 RUN apt-get update && apt-get install -y \
   curl \
@@ -53,4 +54,15 @@ RUN useradd --create-home --home-dir $HOME user \
 	&& chown -R user:user $HOME
 
 WORKDIR $HOME
+
+#USER user
+
+RUN apt-get install -y git
+
+RUN su user -c  "code --install-extension PeterJausovec.vscode-docker" && \
+    su user -c  "code --install-extension redhat.java"
+
+ENV JAVA_HOME /opt/ibm/java
+
+CMD /usr/bin/code -w
 
